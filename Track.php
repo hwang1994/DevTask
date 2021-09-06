@@ -8,12 +8,12 @@ class Track
     /**
      * @var int
      */
-    private $totalElements;
+    private $totalElements = self::DEFAULT_TOTAL_ELEMENTS;
 
     /**
      * @var int
      */
-    private $elementsSeriesLength;
+    private $elementsSeriesLength = self::DEFAULT_ELEMENTS_SERIES_LENGTH;
 
     /**
      * @var array
@@ -27,13 +27,8 @@ class Track
             $this->totalElements = $totalElements;
             $this->elementsSeriesLength = $elementsSeriesLength;
         }
-        else 
-        {
-            $this->totalElements = self::DEFAULT_TOTAL_ELEMENTS;
-            $this->elementsSeriesLength = self::DEFAULT_ELEMENTS_SERIES_LENGTH;
-        }
         // set track
-        for($i = 0; $i < $totalElements; $i+=$elementsSeriesLength) // instructions said to start at element 0 (i wouldve used 1)
+        for($i = 0; $i < $totalElements; $i+=$elementsSeriesLength) // instructions said to start at element 0
         {
             $range = $i + $elementsSeriesLength; // 40, 80, 120, 160...
             $randval = mt_rand(0, 1);

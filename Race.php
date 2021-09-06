@@ -7,12 +7,12 @@ class Race
     /**
      * @var int
      */
-    private $startingPosition;
+    private $startingPosition = self::DEFAULT_STARTING_POSITION;
 
     /**
      * @var int
      */
-    private $numberOfCars;
+    private $numberOfCars = self::DEFAULT_NUMBER_OF_CARS;
 
     /**
      * @var array
@@ -32,12 +32,7 @@ class Race
             $this->startingPosition = $startingPosition;
             $this->numberOfCars = $numberOfCars;
         }
-        else 
-        {
-            $this->startingPosition = self::DEFAULT_STARTING_POSITION;
-            $this->numberOfCars = self::DEFAULT_NUMBER_OF_CARS;
-        }
-        for($i = 1; $i <= $numberOfCars; $i++) //use index 1 as the start
+        for($i = 0; $i < $numberOfCars; $i++)
         {
             $this->cars[$i] = new Car;
         }
@@ -49,12 +44,13 @@ class Race
         print_r($this->track->getTrackElements());
         print_r($this->cars);
         $raceResult = new RaceResult;
-        $carPositions = array_fill(1, $this->numberOfCars, $this->startingPosition);
+        $carPositions = array_fill(0, $this->numberOfCars, $this->startingPosition);
+        print_r($carPositions);
         $round = 0;
         $isRaceFinished = false;
         while (!$isRaceFinished)
         {
-            for($i = 1; $i <= $this->numberOfCars; $i++) // go through each car
+            for($i = 0; $i < $this->numberOfCars; $i++) // go through each car
             {
                 $roundStartingIndex = $carPositions[$i];
                 if ($this->track->getOrientationAtIndex($roundStartingIndex) == 'straight')

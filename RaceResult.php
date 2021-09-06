@@ -3,7 +3,7 @@
 class RaceResult
 {
     /**
-     * @var array of StepResult
+     * @var array of RoundResult
      */
     private $roundResults = [];
 

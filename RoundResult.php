@@ -6,16 +6,27 @@ class RoundResult
     /**
      * @var int
      */
-    public $step;
+    private $step; // change to private
 
     /**
      * @var array
      */
-    public $carsPosition;
+    private $carsPosition; // change to private
 
     public function __construct(int $step, array $carsPosition)
     {
         $this->step = $step;
         $this->carsPosition = $carsPosition;
+    }
+
+    //added getters since i changed properties to private
+    public function getStep(): int
+    {
+        return $this->step;
+    }
+
+    public function getCarsPosition(): array
+    {
+        return $this->carsPosition;
     }
 }
