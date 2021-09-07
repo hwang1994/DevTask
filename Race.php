@@ -7,15 +7,15 @@ class Race
     /**
      * @var int
      */
-    private $startingPosition = self::DEFAULT_STARTING_POSITION;
+    private $startingPosition= self::DEFAULT_STARTING_POSITION;
 
     /**
      * @var int
      */
-    private $numberOfCars = self::DEFAULT_NUMBER_OF_CARS;
+    private $numberOfCars= self::DEFAULT_NUMBER_OF_CARS;
 
     /**
-     * @var array
+     * @var array of Cars
      */
     private $cars;
 
@@ -26,17 +26,33 @@ class Race
 
     public function __construct(int $startingPosition= self::DEFAULT_STARTING_POSITION, int $numberOfCars = self::DEFAULT_NUMBER_OF_CARS) // using defaults
     {
-        //check parameters is probably unneccesary for this task
+        //checking parameters is probably unneccesary for this task
         if ($startingPosition >= 0 && $numberOfCars > 0)
         {
             $this->startingPosition = $startingPosition;
             $this->numberOfCars = $numberOfCars;
         }
-        for($i = 0; $i < $numberOfCars; $i++)
+        for($i = 0; $i < $this->numberOfCars; $i++)
         {
             $this->cars[$i] = new Car;
         }
         $this->track = new Track;
+    }
+
+    public function getStartingPosition(): int {
+        return $this->startingPosition;
+    }
+
+    public function getNumberOfCars(): int {
+        return $this->numberOfCars;
+    }
+
+    public function getCars(): array {
+        return $this->cars;
+    }
+
+    public function getTrack(): Track {
+        return $this->track;
     }
 
     public function runRace(): RaceResult
@@ -71,7 +87,6 @@ class Race
             $raceResult->pushRoundResult($roundResult);
         }
         return $raceResult;
-        //return null;
     }
 
     private function moveCar(int $carPosition, int $speed, string $orientation): int
@@ -83,15 +98,16 @@ class Race
         }
         else 
         {
-            for($i = $carPosition; $i < ($carPosition + $speed); $i++)
+            $boundary = $carPosition+$speed;
+            for($i = $carPosition; $i < $boundary; $i++)
             {
                 if ($this->track->getOrientationAtIndex($i) == $this->track->getOrientationAtIndex($i+1)) // if no change in orientation at next element
                 {
-                    $carPosition ++;
+                    $carPosition++;
                 }
                 else
                 {
-                    $carPosition ++;
+                    $carPosition++;
                     break;
                 }
             }

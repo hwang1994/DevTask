@@ -2,8 +2,8 @@
 
 class Car
 {
-    const DEFAULT_MIN_SPEED = 4;
-    const DEFAULT_TOTAL_SPEED = 22;
+    const MIN_SPEED = 4;
+    const TOTAL_SPEED = 22;
 
     /**
      * @var int
@@ -15,15 +15,10 @@ class Car
      */
     private $curveSpeed;
 
-    public function __construct(int $minSpeed = self::DEFAULT_MIN_SPEED, int $totalSpeed = self::DEFAULT_TOTAL_SPEED) // defaults
+    public function __construct()
     {
-        if ($minSpeed <= 0 || $totalSpeed < $minSpeed) //check parameters is probably unneccesary for this task
-        {
-            $minSpeed = self::DEFAULT_MIN_SPEED;
-            $totalSpeed = self::DEFAULT_TOTAL_SPEED;
-        }
-        $this->straightSpeed = mt_rand($minSpeed, $totalSpeed - $minSpeed);
-        $this->curveSpeed = $totalSpeed - $this->straightSpeed;
+        $this->straightSpeed = mt_rand(self::MIN_SPEED, self::TOTAL_SPEED - self::MIN_SPEED);
+        $this->curveSpeed = self::TOTAL_SPEED - $this->straightSpeed;
     }
 
     public function getStraightSpeed(): int {

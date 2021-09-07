@@ -22,17 +22,17 @@ class Track
 
     public function __construct(int $totalElements = self::DEFAULT_TOTAL_ELEMENTS, int $elementsSeriesLength = self::DEFAULT_ELEMENTS_SERIES_LENGTH) // default values
     {
-        if ($elementsSeriesLength > 0 && $totalElements >= $elementsSeriesLength) //check parameters is probably unneccesary for this task
+        if ($elementsSeriesLength > 0 && $totalElements >= $elementsSeriesLength) //checking parameters is probably unneccesary for this task
         {
             $this->totalElements = $totalElements;
             $this->elementsSeriesLength = $elementsSeriesLength;
         }
         // set track
-        for($i = 0; $i < $totalElements; $i+=$elementsSeriesLength) // instructions said to start at element 0
+        for($i = 0; $i < $this->totalElements; $i+=$this->elementsSeriesLength) // instructions said to start at element 0
         {
-            $range = $i + $elementsSeriesLength; // 40, 80, 120, 160...
+            $range = $i + $this->elementsSeriesLength; // 40, 80, 120, 160...
             $randval = mt_rand(0, 1);
-            for($j = $i; $j < $range; $j++)
+            for($j = $i; $j < $range && $j < $this->totalElements; $j++)
             {
                 $this->trackElements[] = $randval;
             }
@@ -56,17 +56,16 @@ class Track
 
     public function getOrientationAtIndex($index): string
     {
-        if ($index >= ($this->totalElements-1))
+        if ($index >= 0 && $index < $this->totalElements-1) // don't care about orientation of last element since that's where we stop
         {
-            return 'end';
-        }
-        if ($this->trackElements[$index]==1)
-        {
-            return 'straight';
-        }
-        else if ($this->trackElements[$index]==0)
-        {
-            return 'curve';
+            if ($this->trackElements[$index]==1)
+            {
+                return 'straight';
+            }
+            else
+            {
+                return 'curve';
+            }
         }
         else 
         {
