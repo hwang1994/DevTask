@@ -57,11 +57,11 @@ class Race
 
     public function runRace(): RaceResult
     {
-        print_r($this->track->getTrackElements());
-        print_r($this->cars);
+        // print_r($this->track->getTrackElements());
+        // print_r($this->cars);
         $raceResult = new RaceResult;
         $carPositions = array_fill(0, $this->numberOfCars, $this->startingPosition);
-        print_r($carPositions);
+        // print_r($carPositions);
         $round = 0;
         $isRaceFinished = false;
         while (!$isRaceFinished)
@@ -77,7 +77,6 @@ class Race
                 {
                     $carPositions[$i] = $this->moveCar($roundStartingIndex, $this->cars[$i]->getCurveSpeed(), $this->track->getOrientationAtIndex($roundStartingIndex));
                 }
-                //print_r($carPositions);
                 if ($carPositions[$i] >= ($this->track->getTotalElements()-1)) // check if the car's position has reach the end of the track
                 {
                     $isRaceFinished = true;
@@ -91,14 +90,14 @@ class Race
 
     private function moveCar(int $carPosition, int $speed, string $orientation): int
     {
-        // this if shortcut below assumes that the length of a series of elements is greater than each car's speed
-        if ($this->track->getOrientationAtIndex($carPosition + $speed) == $orientation) // if no orientation change at the end
+        $boundary = $carPosition+$speed;
+        // this if shortcut below is good for when the length of a series of elements is greater than each car's speed AND when the orientation at the end of speed is not changed
+        if ($this->track->getElementsSeriesLength() >= $speed && $this->track->getOrientationAtIndex($boundary) == $orientation) // if no orientation change at the end
         {
             $carPosition += $speed;
         }
         else 
         {
-            $boundary = $carPosition+$speed;
             for($i = $carPosition; $i < $boundary; $i++)
             {
                 if ($this->track->getOrientationAtIndex($i) == $this->track->getOrientationAtIndex($i+1)) // if no change in orientation at next element
